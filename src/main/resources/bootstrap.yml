@@ -1,0 +1,25 @@
+build.version: @project.version@
+brickName: @brick.name@
+
+spring:
+  application:
+    name: @project.name@
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: config-server
+      failFast: true
+      label: develop
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${REPLICASET}
+
+logging:
+  file: logs/${spring.application.name}.log
+  level:
+    ROOT: INFO
+  pattern:
+    console: "payment_${spring.application.name} %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%X{transactionId},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-}]){blue}[%thread] %clr(%-5level) %clr(%logger{36}){magenta} - %msg%n"
